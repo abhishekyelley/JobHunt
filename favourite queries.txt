@@ -1,0 +1,1 @@
+SELECT * FROM `users` WHERE `id` IN (SELECT `userid` FROM `applier` WHERE `jobid` IN (SELECT `id` FROM `jobs` WHERE `creator` = 3));

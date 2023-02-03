@@ -1,0 +1,77 @@
+<html>
+<head>
+	<link rel="stylesheet" href="stylyl.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Job Hunt</title>
+</head>
+<body>
+    <?php
+        include("joblink.php");
+    ?>
+
+    <script>
+        function giveDetails(x){
+            localStorage.setItem("the-id", x);
+            document.getElementById("right_side").src = "job-details.php";
+        }
+    </script>
+	
+	<a style="position: fixed" href="homie.php"><img class="thumbnail" height=100 width=100 src="chettha.png"></a>
+	<div class="container">
+        
+		<div class="nav">
+			<a href="profiley.html"><i class="fa fa-user"></i><br>Profile</a>
+			<a href="for.html"><i class="fa fa-sign-in"></i><br>Log In</a>
+			<b style="font-size: 35px;padding: 0 0px;margin:0 0px">|</b>
+			<a href="peopley.html"><i class="fa fa-child"></i><br>People</a>
+			<a class="bongu" href="jobbie.php"><i class="fa fa-briefcase"></i><br>Jobs</a>
+			<a href="homie.php"><i class="fa fa-home"></i><br>Home</a>
+		</div>
+
+        <?php
+            if(isset($_GET['submit'])){
+                $qry = $_GET['tsearch'];
+                $result = $con->query("SELECT * FROM `jobs` WHERE `jtitle` LIKE '%$qry%'");
+            }
+        ?>
+
+        <a>Showing results for: 3 Jobs</a>
+        <div class="searcher">
+            <form action="" method="GET">
+                <input name="tsearch" placeholder="Search by title..." type="text" />
+                <input type="submit" name="submit" value="Search" />
+            </form>
+        </div>
+        <br>
+        <div class="job-container">
+            <ul>
+                <?php 
+                    foreach($result as $value) {
+                ?>
+                <a href="job-details.php?myid=<?php echo $value['id'];?>" target="right_side">
+                    <li>
+                        <biggy  style="font-size:20" ><?php echo $value['jtitle'];?></biggy><br>
+                        <a style="font-size:14;color: black;"><?php echo $value['company'];?></a>
+                        <br>
+                        <a  style="font-size:12;color: black;" ><?php echo $value['location'];?></a>
+                    </li>
+
+                </a>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+
+        <iframe id="right_side" name="right_side" src="" width="100%"  
+        height="100%" frameBorder="0"></iframe>
+
+        <!--<div class="detail-container">
+            <ul>
+
+            </ul>
+        </div>-->
+        <!--<img style="z-index:-500;object-fit:cover;left:0;width:100%;height:79%;opacity:5%;position:fixed" src="pattern.png">-->
+    </div>
+</body>
+</html>
